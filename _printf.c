@@ -3,7 +3,6 @@
  * @format: - char to sperate ints
  * Return: int
  */
-
 int _printf(const char *format, ...)
 {
 	int i, sum;
@@ -47,7 +46,6 @@ int _printf(const char *format, ...)
  * @conversions: - char to sperate ints
  * @flags: - char to sperate ints
  */
-
 void define_consts(conv_actions *conversions, char *flags)
 {
 	int i;
@@ -76,7 +74,6 @@ void define_consts(conv_actions *conversions, char *flags)
  * @flags: - char to sperate ints
  * @conv: - char to sperate ints
  */
-
 void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_conversion *conv)
 {
 	char conv_flags[5] = "\0\0\0\0\0", *local_s;
@@ -86,13 +83,15 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 	flag_i = 0, p = 0;
 	for (i = 0; local_s[i] != '\0'; i++)
 	{
-		if (local_s[i] - 'A' >= 0 && local_s[i] - 'A' <= 'z' - 'A' && conversions[local_s[i] - 'A'])
+		if (local_s[i] - 'A' >= 0 && local_s[i] - 'A' <= 'z' - 'A'
+			&& conversions[local_s[i] - 'A'])
 		{
 			conv->conv = local_s[i];
 			_strcp(conv->flags, conv_flags);
 			return;
 		}
-		else if (local_s[i] - ' ' >= 0 && local_s[i] - ' ' <= '.' - ' ' && flags[local_s[i] - ' '] && p == 0 && (conv->width == 0 || local_s[i] == '.'))
+		else if (local_s[i] - ' ' >= 0 && local_s[i] - ' ' <= '.' - ' ' && flags[local_s[i] - ' ']
+			&& p == 0 && (conv->width == 0 || local_s[i] == '.'))
 		{
 			if (local_s[i] == '.')
 				p++;
@@ -102,7 +101,8 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 			flag_i++;
 			}
 		}
-		else if (local_s[i] >= '0' && local_s[i] <= '9' && ((conv->width == 0 && p == 0) || (conv->p == 0 && p == 1)))
+		else if (local_s[i] >= '0' && local_s[i] <= '9' &&
+			((conv->width == 0 && p == 0) || (conv->p == 0 && p == 1)))
 		{
 			local_s += i;
 			i = -1;
@@ -115,4 +115,36 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 		else
 			return;
 	}
+}
+
+/**
+ * init_conv - print strings
+ * @conv: - char to sperate ints
+ * @conv_flag: - char to sperate ints
+ */
+void init_conv(struct struct_conversion *conv, char *conv_flag)
+{
+	conv->conv = '\0';
+	conv->flags = conv_flag;
+	conv->p = 0;
+	conv->width = 0;
+}
+
+/**
+ * to_int - print strings
+ * @s: - char** to sperate ints
+ * Return: int
+ */
+int to_int(char **s)
+{
+	int i, val;
+	
+	val = 0;
+	for (i = 0; (*s)[i] >= '0' && (*s)[i] <= '9'; i++)
+	{
+		val *= 10;
+		val += (*s)[i] - '0';
+	}
+	*s += i;
+	return (val);
 }
