@@ -24,7 +24,7 @@ int _printf(const char *format, ...)
 	init_conv(&conv, conv_flag);
 	if (s[i] == '%')
 	{
-		valid_exp(s + i + 1, conversions, flags, &conv);
+		valid_exp(s + i + 1, flags, &conv);
 		if (conv.conv != '\0')
 		{
 			if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
@@ -84,7 +84,7 @@ void define_consts(conv_actions *conversions, char *flags)
  * @flags: - char to sperate ints
  * @conv: - char to sperate ints
  */
-void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_conversion *conv)
+void valid_exp(char *s, char *flags, struct struct_conversion *conv)
 {
 	char conv_flags[5] = "\0\0\0\0\0", *local_s;
 	int i, flag_i, p, num;
