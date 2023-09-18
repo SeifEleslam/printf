@@ -9,7 +9,7 @@ int _printf(const char *format, ...)
 {
 	int i, sum;
 	conv_actions conversions['z' - '%'], func;
-	char flags['/' - ' '], conv_flag[5], *s;
+	conv_flag[5], *s;
 	struct struct_conversion conv;
 	va_list list;
 	
@@ -81,7 +81,7 @@ void define_consts(conv_actions *conversions)
  * @flags: - char to sperate ints
  * @conv: - char to sperate ints
  */
-void valid_exp(char *s, char *flags, struct struct_conversion *conv)
+void valid_exp(char *s, struct struct_conversion *conv)
 {
 	char conv_flags[5] = "\0\0\0\0\0", *local_s;
 	char flags[] = "+ -.#";
@@ -128,6 +128,9 @@ void valid_exp(char *s, char *flags, struct struct_conversion *conv)
  */
 void init_conv(struct struct_conversion *conv, char *conv_flag)
 {
+	int i;
+	for (i = 0; i < 15; i++)
+		conv_flag[i] = '\0';
 	conv->conv = '\0';
 	conv->flags = conv_flag;
 	conv->p = 0;
