@@ -85,7 +85,7 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 	flag_i = 0, p = 0;
 	for (i = 0; local_s[i] != '\0'; i++)
 	{
-		if (local_s[i] - '%' >= 0 && local_s[i] - '%' <= 'z' - '%'
+		if (local_s[i] - '%' >= 0 && local_s[i] - '%' < 'z' - '%'
 			&& conversions[local_s[i] - '%'])
 		{
 			conv->conv = local_s[i];
