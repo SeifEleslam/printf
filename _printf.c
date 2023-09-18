@@ -9,7 +9,7 @@ int _printf(const char *format, ...)
 {
 	int i, sum;
 	conv_actions conversions['z' - '%'], func;
-	conv_flag[5], *s;
+	char conv_flag[5], *s;
 	struct struct_conversion conv;
 	va_list list;
 	
