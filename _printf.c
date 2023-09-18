@@ -1,0 +1,118 @@
+/**
+ * _printf - print strings
+ * @format: - char to sperate ints
+ * Return: int
+ */
+
+int _printf(const char *format, ...)
+{
+	int i, sum;
+	conv_actions conversions['z' - 'A'], func;
+	char flags['/' - ' '], conv_flag[5], *s;
+	struct struct_conversion conv;
+	va_list list;
+	
+	if (!format)
+		return -1;
+	sum = 0;
+	s = (char *)format;
+	define_consts(conversions, flags);
+	va_start(list, format);
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		init_conv(&conv, conv_flag);
+		if (s[i] == '%')
+		{
+			valid_exp(s + i + 1, conversions, flags, &conv);
+			if (conv.conv != '\0')
+			{
+				// printf("conv: %c, %s\n", conv.conv, conv.flags);
+				sum = sum + _putstr(s, i);
+				while (s[i] != conv.conv)
+					i++;
+				s = s + i + 1;
+				i = -1;
+				func = conversions[conv.conv - 'A'];
+				sum = sum + func(&conv, list);
+			}
+		}
+	}
+	sum = sum + _putstr(s, i);
+	va_end(list);
+	return sum;
+}
+
+/**
+ * define_consts - print strings
+ * @conversions: - char to sperate ints
+ * @flags: - char to sperate ints
+ */
+
+void define_consts(conv_actions *conversions, char *flags)
+{
+	int i;
+
+	for (i = 0; i < 'z' - 'A'; i++)
+		conversions[i] = NULL;
+	for (i = 0; i < '/' - ' '; i++)
+		flags[i] = '\0';
+	
+	conversions['c' - 'A'] = handle_conv_c;
+	conversions['s' - 'A'] = handle_conv_s;
+	// conversions['i' - 'A'] = 'i';
+	// conversions['d' - 'A'] = 'd';
+	
+	flags['.' - ' '] = '.';
+	flags['#' - ' '] = '#';
+	flags[' ' - ' '] = ' ';
+	flags['-' - ' '] = '-';
+	flags['+' - ' '] = '+';
+}
+
+/**
+ * valid_exp - print strings
+ * @s: - char to sperate ints
+ * @conversions: - char to sperate ints
+ * @flags: - char to sperate ints
+ * @conv: - char to sperate ints
+ */
+
+void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_conversion *conv)
+{
+	char conv_flags[5] = "\0\0\0\0\0", *local_s;
+	int i, flag_i, p, num;
+	
+	local_s = s;
+	flag_i = 0, p = 0;
+	for (i = 0; local_s[i] != '\0'; i++)
+	{
+		if (local_s[i] - 'A' >= 0 && local_s[i] - 'A' <= 'z' - 'A' && conversions[local_s[i] - 'A'])
+		{
+			conv->conv = local_s[i];
+			_strcp(conv->flags, conv_flags);
+			return;
+		}
+		else if (local_s[i] - ' ' >= 0 && local_s[i] - ' ' <= '.' - ' ' && flags[local_s[i] - ' '] && p == 0 && (conv->width == 0 || local_s[i] == '.'))
+		{
+			if (local_s[i] == '.')
+				p++;
+			if (contains(conv_flags, local_s[i]) == 0)
+			{
+			conv_flags[flag_i] = local_s[i];
+			flag_i++;
+			}
+		}
+		else if (local_s[i] >= '0' && local_s[i] <= '9' && ((conv->width == 0 && p == 0) || (conv->p == 0 && p == 1)))
+		{
+			local_s += i;
+			i = -1;
+			num = to_int(&local_s);
+			if (conv->width == 0 && p == 0)
+				conv->width = num;
+			else
+				conv->p = num;
+		}
+		else
+			return;
+	}
+}
