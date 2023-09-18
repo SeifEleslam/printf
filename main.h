@@ -32,5 +32,6 @@ int assign_width_neg(char *new, char *s, int total_width, int width);
 
 int handle_conv_c(struct struct_conversion *conv, va_list list);
 int handle_conv_s(struct struct_conversion *conv, va_list list);
+int handle_conv_percent(struct struct_conversion *conv, va_list list);
 
 #endif
