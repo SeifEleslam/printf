@@ -27,7 +27,6 @@ int _printf(const char *format, ...)
 			valid_exp(s + i + 1, conversions, flags, &conv);
 			if (conv.conv != '\0')
 			{
-				// printf("conv: %c, %s\n", conv.conv, conv.flags);
 				sum = sum + _putstr(s, i);
 				while (s[i] != conv.conv)
 					i++;
@@ -59,9 +58,9 @@ void define_consts(conv_actions *conversions, char *flags)
 	
 	conversions['c' - 'A'] = handle_conv_c;
 	conversions['s' - 'A'] = handle_conv_s;
-	// conversions['i' - 'A'] = 'i';
-	// conversions['d' - 'A'] = 'd';
-	
+	/* conversions['i' - 'A'] = 'i';
+	 * conversions['d' - 'A'] = 'd';
+	 */
 	flags['.' - ' '] = '.';
 	flags['#' - ' '] = '#';
 	flags[' ' - ' '] = ' ';
