@@ -17,6 +17,8 @@ int handle_conv_c(struct struct_conversion *conv, va_list list)
 		direction = -1;
 	width = conv->width > 1 ? conv->width : 1;
 	new = malloc(sizeof(char) * width);
+	if (!new)
+		exit(1);
 	len = assign_width(new, &c, width, 1, direction);
 	free(new);
 	return len;
