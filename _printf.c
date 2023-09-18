@@ -129,7 +129,7 @@ void valid_exp(char *s, struct struct_conversion *conv)
 void init_conv(struct struct_conversion *conv, char *conv_flag)
 {
 	int i;
-	for (i = 0; i < 15; i++)
+	for (i = 0; i < 5; i++)
 		conv_flag[i] = '\0';
 	conv->conv = '\0';
 	conv->flags = conv_flag;
