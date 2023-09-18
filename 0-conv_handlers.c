@@ -80,7 +80,7 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	sign = 0;
 	direction = 1;
 	num = (int)va_arg(list, int);
-	len = _intlen(num);
+	len = _intlen(num, 10);
 	if (num < 0 || contains(conv->flags, '+'))
 	{
 		len++;
