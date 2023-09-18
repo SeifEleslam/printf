@@ -31,11 +31,14 @@ int assign_width_pos(char *new, char *s, int total_width, int width);
 int assign_width_neg(char *new, char *s, int total_width, int width);
 
 void int_to_str(int num, char *new_num, int len, int sign);
-int _intlen(int num);
+void uint_to_str(unsigned int num, char *new_num, int len, unsigned int base);
+int _intlen(int num, int base);
+int _uintlen(unsigned int num, unsigned int base);
 
 int handle_conv_c(struct struct_conversion *conv, va_list list);
 int handle_conv_s(struct struct_conversion *conv, va_list list);
 int handle_conv_percent(struct struct_conversion *conv, va_list list);
 int handle_conv_i(struct struct_conversion *conv, va_list list);
+int handle_conv_b(struct struct_conversion *conv, va_list list);
 
 #endif
