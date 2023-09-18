@@ -39,7 +39,7 @@ int handle_conv_s(struct struct_conversion *conv, va_list list)
 	
 	direction = 1;
 	s = va_arg(list, char *);
-	if (s == NULL)
+	if (s == NULL || *s < 0)
 		s = nil;
 	if (contains(conv->flags, '-'))
 		direction = -1;
