@@ -21,11 +21,13 @@ int _printf(const char *format, ...)
 	va_start(list, format);
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		init_conv(&conv, conv_flag);
-		if (s[i] == '%')
+	init_conv(&conv, conv_flag);
+	if (s[i] == '%')
+	{
+		valid_exp(s + i + 1, conversions, flags, &conv);
+		if (conv.conv != '\0')
 		{
-			valid_exp(s + i + 1, conversions, flags, &conv);
-			if (conv.conv != '\0')
+			if (conv.conv - '%' >= 0 && conversions[conv.conv - '%'])
 			{
 				sum += _putstr(s, i), i++;
 				while (s[i] != conv.conv)
@@ -36,6 +38,12 @@ int _printf(const char *format, ...)
 				sum += func(&conv, list);
 			}
 		}
+		else
+		{
+			_putstr(s, i);
+			return (-1);
+		}
+	}
 	}
 	sum = sum + _putstr(s, i);
 	va_end(list);
@@ -85,14 +93,7 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 	flag_i = 0, p = 0;
 	for (i = 0; local_s[i] != '\0'; i++)
 	{
-		if (local_s[i] - '%' >= 0 && local_s[i] - '%' < 'z' - '%'
-			&& conversions[local_s[i] - '%'])
-		{
-			conv->conv = local_s[i];
-			_strcp(conv->flags, conv_flags);
-			return;
-		}
-		else if (local_s[i] - ' ' >= 0 && local_s[i] - ' ' <= '.' - ' ' && flags[local_s[i] - ' ']
+		if (local_s[i] - ' ' >= 0 && local_s[i] - ' ' <= '.' - ' ' && flags[local_s[i] - ' ']
 			&& p == 0 && (conv->width == 0 || local_s[i] == '.'))
 		{
 			if (local_s[i] == '.')
@@ -115,7 +116,11 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 				conv->p = num;
 		}
 		else
+		{
+			conv->conv = local_s[i];
+			_strcp(conv->flags, conv_flags);
 			return;
+		}
 	}
 }
 
