@@ -16,9 +16,9 @@ struct struct_conversion
 typedef int (*conv_actions)(struct struct_conversion *, va_list);
 
 int _printf(const char *format, ...);
-void define_consts(conv_actions *conversions, char *flags);
+void define_consts(conv_actions *conversions);
 void init_conv(struct struct_conversion *conv, char *conv_flag);
-void valid_exp(char *s, char *flags, struct struct_conversion *conv);
+void valid_exp(char *s, struct struct_conversion *conv);
 int to_int(char **s);
 
 int _putstr(char *s, unsigned int n);
@@ -40,5 +40,7 @@ int handle_conv_s(struct struct_conversion *conv, va_list list);
 int handle_conv_percent(struct struct_conversion *conv, va_list list);
 int handle_conv_i(struct struct_conversion *conv, va_list list);
 int handle_conv_b(struct struct_conversion *conv, va_list list);
+
+int handle_conv_u(struct struct_conversion *conv, va_list list);
 
 #endif
