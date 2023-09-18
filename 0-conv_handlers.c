@@ -106,3 +106,26 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	free(new_all);
 	return len;
 }
+
+/**
+ * handle_conv_b - print strings
+ * @conv: - char to sperate ints
+ * @list: - char to sperate ints
+ * Return: int
+ */
+int handle_conv_b(__attribute__((unused)) struct struct_conversion *conv, va_list list)
+{
+	char *new_num;
+	unsigned int len, num;
+	
+	num = (unsigned int)va_arg(list, unsigned int);
+	len = _uintlen(num, 2);
+	
+	new_num = malloc(sizeof(char) * len);
+	if (!new_num)
+		exit(1);
+	uint_to_str(num, new_num, len, 2);
+	len = _putstr(new_num, len);
+	free(new_num);
+	return len;
+}
