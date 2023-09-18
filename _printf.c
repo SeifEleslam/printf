@@ -68,6 +68,7 @@ void define_consts(conv_actions *conversions)
 	conversions['i' - '%'] = handle_conv_i;
 	conversions['d' - '%'] = handle_conv_i;
 	conversions['b' - '%'] = handle_conv_b;
+	conversions['u' - '%'] = handle_conv_u;
 	/* conversions['i' - '%'] = 'i';
 	 * conversions['d' - '%'] = 'd';
 	 */
