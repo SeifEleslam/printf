@@ -27,7 +27,7 @@ int _printf(const char *format, ...)
 		valid_exp(s + i + 1, conversions, flags, &conv);
 		if (conv.conv != '\0')
 		{
-			if (conv.conv - '%' >= 0 && conversions[conv.conv - '%'])
+			if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
 			{
 				sum += _putstr(s, i), i++;
 				while (s[i] != conv.conv)
