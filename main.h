@@ -18,7 +18,7 @@ typedef int (*conv_actions)(struct struct_conversion *, va_list);
 int _printf(const char *format, ...);
 void define_consts(conv_actions *conversions, char *flags);
 void init_conv(struct struct_conversion *conv, char *conv_flag);
-void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_conversion *conv);
+void valid_exp(char *s, char *flags, struct struct_conversion *conv);
 int to_int(char **s);
 
 int _putstr(char *s, unsigned int n);
