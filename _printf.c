@@ -8,7 +8,7 @@
 int _printf(const char *format, ...)
 {
 	int i, sum;
-	conv_actions conversions['z' - 'A'], func;
+	conv_actions conversions['z' - '%'], func;
 	char flags['/' - ' '], conv_flag[5], *s;
 	struct struct_conversion conv;
 	va_list list;
@@ -27,13 +27,13 @@ int _printf(const char *format, ...)
 			valid_exp(s + i + 1, conversions, flags, &conv);
 			if (conv.conv != '\0')
 			{
-				sum = sum + _putstr(s, i);
+				sum += _putstr(s, i), i++;
 				while (s[i] != conv.conv)
 					i++;
-				s = s + i + 1;
+				s += i + 1;
 				i = -1;
-				func = conversions[conv.conv - 'A'];
-				sum = sum + func(&conv, list);
+				func = conversions[conv.conv - '%'];
+				sum += func(&conv, list);
 			}
 		}
 	}
@@ -51,15 +51,16 @@ void define_consts(conv_actions *conversions, char *flags)
 {
 	int i;
 
-	for (i = 0; i < 'z' - 'A'; i++)
+	for (i = 0; i < 'z' - '%'; i++)
 		conversions[i] = NULL;
 	for (i = 0; i < '/' - ' '; i++)
 		flags[i] = '\0';
 	
-	conversions['c' - 'A'] = handle_conv_c;
-	conversions['s' - 'A'] = handle_conv_s;
-	/* conversions['i' - 'A'] = 'i';
-	 * conversions['d' - 'A'] = 'd';
+	conversions['c' - '%'] = handle_conv_c;
+	conversions['s' - '%'] = handle_conv_s;
+	conversions['%' - '%'] = handle_conv_percent;
+	/* conversions['i' - '%'] = 'i';
+	 * conversions['d' - '%'] = 'd';
 	 */
 	flags['.' - ' '] = '.';
 	flags['#' - ' '] = '#';
@@ -84,8 +85,8 @@ void valid_exp(char *s, conv_actions *conversions, char *flags, struct struct_co
 	flag_i = 0, p = 0;
 	for (i = 0; local_s[i] != '\0'; i++)
 	{
-		if (local_s[i] - 'A' >= 0 && local_s[i] - 'A' <= 'z' - 'A'
-			&& conversions[local_s[i] - 'A'])
+		if (local_s[i] - '%' >= 0 && local_s[i] - '%' <= 'z' - '%'
+			&& conversions[local_s[i] - '%'])
 		{
 			conv->conv = local_s[i];
 			_strcp(conv->flags, conv_flags);
