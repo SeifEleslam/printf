@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * _printf - print strings
  * @format: - char to sperate ints
