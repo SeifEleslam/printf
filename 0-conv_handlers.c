@@ -33,7 +33,7 @@ int handle_conv_c(struct struct_conversion *conv, va_list list)
  */
 int handle_conv_s(struct struct_conversion *conv, va_list list)
 {
-	char nil[] = "(nill)";
+	char nil[] = "(null)";
 	char *new, *s;
 	int direction, width, len;
 	
