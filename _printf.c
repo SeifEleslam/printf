@@ -17,14 +17,14 @@ int _printf(const char *format, ...)
 		return -1;
 	sum = 0;
 	s = (char *)format;
-	define_consts(conversions, flags);
+	define_consts(conversions);
 	va_start(list, format);
 	for (i = 0; s[i] != '\0'; i++)
 	{
 	init_conv(&conv, conv_flag);
 	if (s[i] == '%')
 	{
-		valid_exp(s + i + 1, flags, &conv);
+		valid_exp(s + i + 1, &conv);
 		if (conv.conv != '\0')
 		{
 			if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
@@ -55,14 +55,12 @@ int _printf(const char *format, ...)
  * @conversions: - char to sperate ints
  * @flags: - char to sperate ints
  */
-void define_consts(conv_actions *conversions, char *flags)
+void define_consts(conv_actions *conversions)
 {
 	int i;
 
 	for (i = 0; i < 'z' - '%'; i++)
 		conversions[i] = NULL;
-	for (i = 0; i < '/' - ' '; i++)
-		flags[i] = '\0';
 	
 	conversions['c' - '%'] = handle_conv_c;
 	conversions['s' - '%'] = handle_conv_s;
@@ -73,11 +71,6 @@ void define_consts(conv_actions *conversions, char *flags)
 	/* conversions['i' - '%'] = 'i';
 	 * conversions['d' - '%'] = 'd';
 	 */
-	flags['.' - ' '] = '.';
-	flags['#' - ' '] = '#';
-	flags[' ' - ' '] = ' ';
-	flags['-' - ' '] = '-';
-	flags['+' - ' '] = '+';
 }
 
 /**
@@ -90,14 +83,14 @@ void define_consts(conv_actions *conversions, char *flags)
 void valid_exp(char *s, char *flags, struct struct_conversion *conv)
 {
 	char conv_flags[5] = "\0\0\0\0\0", *local_s;
+	char flags[] = "+ -.#";
 	int i, flag_i, p, num;
 	
 	local_s = s;
 	flag_i = 0, p = 0;
 	for (i = 0; local_s[i] != '\0'; i++)
 	{
-		if (local_s[i] - ' ' >= 0 && local_s[i] - ' ' <= '.' - ' ' && flags[local_s[i] - ' ']
-			&& p == 0 && (conv->width == 0 || local_s[i] == '.'))
+		if (contains(flags, local_s[i]) == 1&& p == 0 && (conv->width == 0 || local_s[i] == '.'))
 		{
 			if (local_s[i] == '.')
 				p++;
