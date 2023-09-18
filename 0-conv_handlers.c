@@ -50,3 +50,15 @@ int handle_conv_s(struct struct_conversion *conv, va_list list)
 	free(new);
 	return len;
 }
+
+/**
+ * handle_conv_percent - print strings
+ * @conv: - char to sperate ints
+ * @list: - char to sperate ints
+ * Return: int
+ */
+int handle_conv_percent(__attribute__((unused)) struct struct_conversion *conv, __attribute__((unused)) va_list list)
+{
+	char percent = '%';
+	return _putstr(&percent, 1);
+}
