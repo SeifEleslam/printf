@@ -62,9 +62,7 @@ void int_to_str(int num, char *new_num, int len, int sign)
 void uint_to_str(unsigned int num, char *new_num, int len, unsigned int base)
 {
 	int i;
-	
-	if (num < 0)
-	num *= -1;
+
 	for (i = len - 1; i >= 0; i--)
 	{
 		new_num[i] = (num % base) + '0';
