@@ -27,6 +27,8 @@ void int_to_str(int num, char *new_num, int len, int sign)
 
 	if (sign == 1)
 		new_num[0] = num < 0 ? '-' : '+';
+	if (num < 0)
+		num *= -1;
 	for (i = len - 1; i >= sign; i--)
 	{
 		new_num[i] = (num % 10) + '0';
