@@ -98,6 +98,8 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		len = conv->p + sign;
 	if (contains(conv->flags, ' ') && !contains(conv->flags, '+'))
 		len++;
+	if (!contains(conv->flags, '.') && contains(conv->flags, '0') && conv->width >= len)
+		len = conv->width;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
