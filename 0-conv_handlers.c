@@ -99,10 +99,7 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		num = (int)va_arg(list, int);
 	len = _intlen(num, 10);
 	if (num < 0 || contains(conv->flags, '+'))
-	{
-		len++;
-		sign = 1;
-	}
+		len++, sign = 1;
 	direction = contains(conv->flags, '-') ? -1 : direction;
 	len = contains(conv->flags, '.') && conv->p >= len ? conv->p + sign : len;
 	len = (contains(conv->flags, ' ') && !contains(conv->flags, '+')
@@ -115,7 +112,8 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	int_to_str(num, new_num, len, sign);
 	if (contains(conv->flags, ' ') && !contains(conv->flags, '+') && num >= 0)
 		new_num[0] = ' ';
-	width = conv->width > len ? conv->width : len, new_all = malloc(sizeof(char) * width);
+	width = conv->width > len ? conv->width : len;
+	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
 	{
 		free(new_num);
