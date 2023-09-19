@@ -59,13 +59,13 @@ void int_to_str(int num, char *new_num, int len, int sign)
  * @len: - char to sperate ints
  * @base: - char to sperate ints
  */
-void uint_to_str(unsigned int num, char *new_num, int len, unsigned int base)
+void uint_to_str(unsigned int num, char *new_num, int len, unsigned int base, int uppercase)
 {
 	int i;
 
 	for (i = len - 1; i >= 0; i--)
 	{
-		new_num[i] = (num % base) + '0';
+		new_num[i] = num % base < 10 ? (num % base) + '0' : (num % base - 10) + (uppercase == 1 ? 'A' : 'a');
 		num /= base;
 	}
 }
