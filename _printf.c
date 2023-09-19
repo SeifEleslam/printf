@@ -114,6 +114,13 @@ void valid_exp(char *s, struct struct_conversion *conv)
 			else
 				conv->p = num;
 		}
+		else if (local_s[i] == 'l' || local_s[i] == 'h')
+		{
+			conv->len = local_s[i];
+			conv->conv = local_s[i + 1];
+			_strcp(conv->flags, conv_flags);
+			return;
+		}
 		else
 		{
 			conv->conv = local_s[i];
