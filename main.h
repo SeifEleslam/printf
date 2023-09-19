@@ -7,10 +7,11 @@
 
 struct struct_conversion
 {
-  char conv;
-  char *flags;
-  int p;
-  int width;
+	char conv;
+	char len;
+	char *flags;
+	int p;
+	int width;
 };
 
 typedef int (*conv_actions)(struct struct_conversion *, va_list);
