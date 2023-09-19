@@ -106,7 +106,7 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
 		exit(1);
 	uint_to_str(num, new_num, len, 16, conv->conv == 'X' ? 1 : 0);
 	if (contains(conv->flags, '#') && num > 0)
-		new_num[0] = '0', new_num[1] = 'x';
+		new_num[0] = '0', new_num[1] = conv->conv == 'X' ? 'X' : 'x';
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
