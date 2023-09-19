@@ -26,6 +26,8 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
 		len++;
 	if (contains(conv->flags, '.') && conv->p > len)
 		len = conv->p;
+	if (!contains(conv->flags, '.') && contains(conv->flags, '0') && conv->width >= len)
+		len = conv->width;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
@@ -70,6 +72,8 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 		len++;
 	if (contains(conv->flags, '.') && conv->p > len)
 		len = conv->p;
+	if (!contains(conv->flags, '.') && contains(conv->flags, '0') && conv->width >= len)
+		len = conv->width;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
@@ -116,6 +120,8 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
 		len = conv->p;
 	if (contains(conv->flags, '#') && num > 0)
 		len += 2;
+	if (!contains(conv->flags, '.') && contains(conv->flags, '0') && conv->width >= len)
+		len = conv->width;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
