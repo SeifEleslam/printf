@@ -119,3 +119,44 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
     free(new_all);
     return len;
 }
+
+/**
+ * handle_conv_S - prints an int
+ * @conv: va_list
+ * @list: va_list
+ * Return: int
+ */
+int handle_conv_S(struct struct_conversion *conv, va_list list)
+{
+    char nil[] = "(null)";
+    char *new, *s;
+    int len, i, l;
+
+    s = (char *)va_arg(list, char *);
+    if (!s || *s < 0)
+        s = nil;
+
+    len = _strlen(s);
+    for (i = 0; i < len; i++)
+        if ((s[i] > 0 && s[i] < 32) || s[i] >= 127)
+            len += 4;
+
+    new = malloc(sizeof(char) * len);
+    if (!new)
+        exit(1);
+    l = 0;
+    for (i = 0; i < len; i++)
+        if ((s[l] > 0 && s[l] < 32) || s[l] >= 127)
+        {
+            new[i] = '\\', new[i + 1] = 'x';
+            new[i + 2] = (s[l] / 16) >= 10 ? (s[l] / 16 - 10 + 'A') : (s[l] / 16 + '0');
+            new[i + 3] = (s[l] % 16) >= 10 ? (s[l] % 16 - 10 + 'A') : (s[l] % 16 + '0');
+            i += 3;
+            l++;
+        }
+        else
+            new[i] = s[l], l++;
+    len = _putstr(new, len);
+    free(new);
+    return len;
+}
