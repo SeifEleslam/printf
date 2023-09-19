@@ -30,10 +30,10 @@ int assign_width(char *new, char *s, int total_width, int width, int direction);
 int assign_width_pos(char *new, char *s, int total_width, int width);
 int assign_width_neg(char *new, char *s, int total_width, int width);
 
-void int_to_str(int num, char *new_num, int len, int sign);
-void uint_to_str(unsigned int num, char *new_num, int len, unsigned int base, int uppercase);
-int _intlen(int num, int base);
-int _uintlen(unsigned int num, unsigned int base);
+void int_to_str(long int num, char *new_num, int len, int sign);
+void uint_to_str(unsigned long int num, char *new_num, int len, unsigned int base, int uppercase);
+int _intlen(long int num, int base);
+int _uintlen(unsigned long int num, unsigned int base);
 
 int handle_conv_c(struct struct_conversion *conv, va_list list);
 int handle_conv_s(struct struct_conversion *conv, va_list list);
