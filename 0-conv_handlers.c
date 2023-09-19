@@ -87,10 +87,12 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	long int num;
 
 	sign = 0, direction = 1;
-	if (conv->starw == 1) conv->width = (int)va_arg(list, int);
-	if (conv->starp == 1) conv->p = (int)va_arg(list, int);
-	if (conv->len == 'l') num = (long int)va_arg(list, long int);
-	else if (conv->len == 'h') num = (short int)va_arg(list, int);
+	conv->width = conv->starw ==1 ? (int)va_arg(list, int) : conv->width;
+	conv->p = conv->starp == 1 ? (int)va_arg(list, int) : conv->p;
+	if (conv->len == 'l')
+		num = (long int)va_arg(list, long int);
+	else if (conv->len == 'h')
+		num = (short int)va_arg(list, int);
 	else num = (int)va_arg(list, int);
 	len = _intlen(num, 10);
 	if (num < 0 || contains(conv->flags, '+'))
@@ -98,12 +100,9 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		len++;
 		sign = 1;
 	}
-	if (contains(conv->flags, '-'))
-		direction = -1;
-	if (contains(conv->flags, '.') && conv->p >= len)
-		len = conv->p + sign;
-	if (contains(conv->flags, ' ') && !contains(conv->flags, '+') && num >= 0)
-		len++;
+	direction = contains(conv->flags, '-') ? -1 : direction;
+	len =contains(conv->flags, '.') && conv->p >= len ? conv->p + sign : len;
+	len = (contains(conv->flags, ' ') && !contains(conv->flags, '+') && num >= 0)? len + 1 : len ;
 	if (!contains(conv->flags, '.') && contains(conv->flags, '0')
 		&& conv->width >= len)
 		len = conv->width;
