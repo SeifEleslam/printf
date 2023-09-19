@@ -71,7 +71,7 @@ int handle_conv_percent(__attribute__((unused)) struct struct_conversion *conv,
 	__attribute__((unused)) va_list list)
 {
 	char percent = '%';
-	
+
 	return (_putstr(&percent, 1));
 }
 
@@ -95,7 +95,7 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		num = (long int)va_arg(list, long int);
 	else if (conv->len == 'h')
 		num = (short int)va_arg(list, int);
-	else 
+	else
 		num = (int)va_arg(list, int);
 	len = _intlen(num, 10);
 	if (num < 0 || contains(conv->flags, '+'))
@@ -105,8 +105,8 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	}
 	direction = contains(conv->flags, '-') ? -1 : direction;
 	len = contains(conv->flags, '.') && conv->p >= len ? conv->p + sign : len;
-	len = (contains(conv->flags, ' ') && !contains(conv->flags, '+') 
-		&& num >= 0)? len + 1 : len;
+	len = (contains(conv->flags, ' ') && !contains(conv->flags, '+')
+		&& num >= 0) ? len + 1 : len;
 	len = (!contains(conv->flags, '.') && contains(conv->flags, '0')
 		&& conv->width >= len) ? conv->width : len;
 	new_num = malloc(sizeof(char) * len);
@@ -115,8 +115,7 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	int_to_str(num, new_num, len, sign);
 	if (contains(conv->flags, ' ') && !contains(conv->flags, '+') && num >= 0)
 		new_num[0] = ' ';
-	width = conv->width > len ? conv->width : len;
-	new_all = malloc(sizeof(char) * width);
+	width = conv->width > len ? conv->width : len, new_all = malloc(sizeof(char) * width);
 	if (!new_all)
 	{
 		free(new_num);
