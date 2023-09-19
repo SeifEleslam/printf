@@ -5,12 +5,13 @@
  * @list: va_list
  * Return: int
  */
-int handle_conv_r(__attribute__((unused)) struct struct_conversion *conv, va_list list)
+int handle_conv_r(__attribute__((unused)) struct struct_conversion *conv,
+va_list list)
 {
 	char nil[] = "(null)";
 	char *new, *s;
 	int len, i;
-	
+
 	s = (char *)va_arg(list, char *);
 	if (!s || *s < 0)
 		s = nil;
@@ -32,12 +33,13 @@ int handle_conv_r(__attribute__((unused)) struct struct_conversion *conv, va_lis
  * @list: va_list
  * Return: int
  */
-int handle_conv_R(__attribute__((unused)) struct struct_conversion *conv, va_list list)
+int handle_conv_R(__attribute__((unused)) struct struct_conversion *conv,
+va_list list)
 {
 	char nil[] = "(null)";
 	char *new, *s;
 	int len, i;
-	
+
 	s = (char *)va_arg(list, char *);
 	if (!s || *s < 0)
 		s = nil;
