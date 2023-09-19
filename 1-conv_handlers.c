@@ -11,7 +11,7 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
 	char *new_all, *new_num;
 	int direction, width, len;
 	unsigned long int num;
-	
+
 	direction = 1;
 	if (conv->starw == 1)
 		conv->width = (int)va_arg(list, int);
@@ -30,7 +30,8 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
 		len++;
 	if (contains(conv->flags, '.') && conv->p > len)
 		len = conv->p;
-	if (!contains(conv->flags, '.') && contains(conv->flags, '0') && conv->width >= len)
+	if (!contains(conv->flags, '.') && 
+		contains(conv->flags, '0') && conv->width >= len)
 		len = conv->width;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
@@ -39,14 +40,11 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
-	{
-		free(new_num);
-		exit(1);
-	}
+		free(new_num), exit(1);
 	len = assign_width(new_all, new_num, width, len, direction);
 	free(new_num);
 	free(new_all);
-	return len;
+	return (len);
 }
 
 
@@ -61,7 +59,7 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 	char *new_all, *new_num;
 	int direction, width, len;
 	unsigned long int num;
-	
+
 	direction = 1;
 	if (conv->starw == 1)
 		conv->width = (int)va_arg(list, int);
@@ -80,7 +78,8 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 		len++;
 	if (contains(conv->flags, '.') && conv->p > len)
 		len = conv->p;
-	if (!contains(conv->flags, '.') && contains(conv->flags, '0') && conv->width >= len)
+	if (!contains(conv->flags, '.') && contains(conv->flags, '0') 
+		&& conv->width >= len)
 		len = conv->width;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
@@ -91,10 +90,7 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
-	{
-		free(new_num);
-		exit(1);
-	}
+		free(new_num), exit(1);
 	len = assign_width(new_all, new_num, width, len, direction);
 	free(new_num);
 	free(new_all);
@@ -150,7 +146,7 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
 	len = assign_width(new_all, new_num, width, len, direction);
 	free(new_num);
 	free(new_all);
-	return len;
+	return (len);
 }
 
 /**
@@ -159,22 +155,21 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
  * @list: va_list
  * Return: int
  */
-int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv, va_list list)
+int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv,
+va_list list)
 {
 	char nil[] = "(null)";
 	char *new, *s;
 	int len, i, l;
-	
+
 	s = (char *)va_arg(list, char *);
 	if (!s || *s < 0)
 		s = nil;
-	
 	len = _strlen(s);
 	l = len;
 	for (i = 0; i < l; i++)
 		if ((s[i] > 0 && s[i] < 32) || s[i] >= 127)
 			len += 3;
-	
 	new = malloc(sizeof(char) * len);
 	if (!new)
 		exit(1);
@@ -194,7 +189,7 @@ int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv, va_lis
 	}
 	len = _putstr(new, len);
 	free(new);
-	return len;
+	return (len);
 }
 
 
@@ -210,7 +205,7 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 	char *new_all, *new_num;
 	int direction, width, len, sign, sp, t;
 	unsigned long int num;
-	
+
 	direction = 1, sign = 0, sp = 0, t = 0;
 	if (conv->starw == 1)
 		conv->width = (int)va_arg(list, int);
@@ -240,12 +235,9 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
-	{
-		free(new_num);
-		exit(1);
-	}
+		free(new_num), exit(1);
 	len = assign_width(new_all, new_num, width, len, direction);
 	free(new_all);
-	return len;
+	return (len);
 }
 
