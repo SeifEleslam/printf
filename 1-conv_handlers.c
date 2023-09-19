@@ -182,12 +182,12 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 	num = (unsigned long int)va_arg(list, unsigned long int);
 	if (contains(conv->flags, '-'))
 		direction = -1;
+	len = _uintlen(num, 16) + 2;
 	new_num = malloc(sizeof(char) * (num ? len : 5));
 	if (!new_num)
 		exit(1);
 	if (num)
 	{
-		len = _uintlen(num, 16) + 2;
 		uint_to_str(num, new_num, len, 16, 0);
 		new_num[0] = '0', new_num[1] = 'x';
 	}
