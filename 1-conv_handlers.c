@@ -62,7 +62,8 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 	else if (conv->len == 'h')
 		num = (unsigned short int)va_arg(list, unsigned int);
 	else
-		num = (unsigned int)va_arg(list, unsigned int);	len = _uintlen(num, 8);
+		num = (unsigned int)va_arg(list, unsigned int);
+	len = _uintlen(num, 8);
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	if (contains(conv->flags, '#') && num > 0)
@@ -107,7 +108,8 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
 	else if (conv->len == 'h')
 		num = (unsigned short int)va_arg(list, unsigned int);
 	else
-		num = (unsigned int)va_arg(list, unsigned int);	len = _uintlen(num, 16);
+		num = (unsigned int)va_arg(list, unsigned int);
+	len = _uintlen(num, 16);
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	if (contains(conv->flags, '.') && conv->p > len)
