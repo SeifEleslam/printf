@@ -126,7 +126,7 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
  * @list: va_list
  * Return: int
  */
-int handle_conv_S(struct struct_conversion *conv, va_list list)
+int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv, va_list list)
 {
 	char nil[] = "(null)";
 	char *new, *s;
