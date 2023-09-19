@@ -76,7 +76,6 @@ int _printf(const char *format, ...)
 /**
  * define_consts - print strings
  * @conversions: - char to sperate ints
- * @flags: - char to sperate ints
  */
 void define_consts(conv_actions *conversions)
 {
@@ -104,8 +103,6 @@ void define_consts(conv_actions *conversions)
 /**
  * valid_exp - print strings
  * @s: - char to sperate ints
- * @conversions: - char to sperate ints
- * @flags: - char to sperate ints
  * @conv: - char to sperate ints
  */
 void valid_exp(char *s, struct struct_conversion *conv)
