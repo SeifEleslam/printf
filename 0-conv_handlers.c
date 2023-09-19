@@ -121,7 +121,8 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		exit(1);
 	}
 	len = assign_width(new_all, new_num, width, len, direction);
-	free(new_num), free(new_all), return (len);
+	free(new_num), free(new_all);
+	return (len);
 }
 
 /**
