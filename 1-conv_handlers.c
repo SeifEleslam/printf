@@ -177,13 +177,14 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 	int direction, width, len;
 	unsigned long int num;
 	
-	direction = 1, len = 14;
+	direction = 1, len = 2;
 	num = (unsigned long int)va_arg(list, unsigned long int);
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	
 	if (num)
 	{
+		len += _uintlen(num, 16);
 		uint_to_str(num, new_num, len, 16, 0);
 		new_num[0] = '0', new_num[1] = 'x';
 	}
