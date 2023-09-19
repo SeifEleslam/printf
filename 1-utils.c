@@ -28,7 +28,7 @@ int assign_width(char *new, char *s, int total_width, int width, int direction)
 int assign_width_pos(char *new, char *s, int total_width, int width)
 	{
 	int i;
-	
+
 	for (i = total_width - 1; i >= 0; i--)
 	{
 		if (width > 0)
@@ -39,7 +39,7 @@ int assign_width_pos(char *new, char *s, int total_width, int width)
 		else
 		new[i] = ' ';
 	}
-	return _putstr(new, total_width);
+	return (_putstr(new, total_width));
 }
 
 /**
@@ -53,7 +53,7 @@ int assign_width_pos(char *new, char *s, int total_width, int width)
 int assign_width_neg(char *new, char *s, int total_width, int width)
 {
 	int i;
-	
+
 	for (i = 0; i < total_width; i++)
 	{
 		if (width > i)
@@ -61,5 +61,5 @@ int assign_width_neg(char *new, char *s, int total_width, int width)
 		else
 			new[i] = ' ';
 	}
-	return _putstr(new, total_width);
+	return (_putstr(new, total_width));
 }
