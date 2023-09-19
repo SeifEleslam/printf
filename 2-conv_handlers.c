@@ -35,7 +35,7 @@ int handle_conv_r(__attribute__((unused)) struct struct_conversion *conv, va_lis
 int handle_conv_R(__attribute__((unused)) struct struct_conversion *conv, va_list list)
 {
 	char nil[] = "(null)";
-	char *new, *s;
+	char *s;
 	int len, i;
 
 	s = (char *)va_arg(list, char *);
