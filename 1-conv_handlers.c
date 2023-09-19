@@ -10,10 +10,15 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
 {
 	char *new_all, *new_num;
 	int direction, width, len;
-	unsigned int num;
+	unsigned long int num;
 	
 	direction = 1;
-	num = (unsigned int)va_arg(list, unsigned int);
+	if (conv->len == 'l')
+		num = (unsigned long int)va_arg(list, unsigned long int);
+	else if (conv->len == 'h')
+		num = (unsigned short int)va_arg(list, unsigned int);
+	else
+		num = (unsigned int)va_arg(list, unsigned int);
 	len = _uintlen(num, 10);
 	if (contains(conv->flags, '-'))
 		direction = -1;
@@ -49,11 +54,15 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 {
 	char *new_all, *new_num;
 	int direction, width, len;
-	unsigned int num;
+	unsigned long int num;
 	
 	direction = 1;
-	num = (unsigned int)va_arg(list, unsigned int);
-	len = _uintlen(num, 8);
+	if (conv->len == 'l')
+		num = (unsigned long int)va_arg(list, unsigned long int);
+	else if (conv->len == 'h')
+		num = (unsigned short int)va_arg(list, unsigned int);
+	else
+		num = (unsigned int)va_arg(list, unsigned int);	len = _uintlen(num, 8);
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	if (contains(conv->flags, '#') && num > 0)
@@ -90,11 +99,15 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
 {
 	char *new_all, *new_num;
 	int direction, width, len;
-	unsigned int num;
+	unsigned long int num;
 	
 	direction = 1;
-	num = (unsigned int)va_arg(list, unsigned int);
-	len = _uintlen(num, 16);
+	if (conv->len == 'l')
+		num = (unsigned long int)va_arg(list, unsigned long int);
+	else if (conv->len == 'h')
+		num = (unsigned short int)va_arg(list, unsigned int);
+	else
+		num = (unsigned int)va_arg(list, unsigned int);	len = _uintlen(num, 16);
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	if (contains(conv->flags, '.') && conv->p > len)
