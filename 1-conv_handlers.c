@@ -182,8 +182,13 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	
-	uint_to_str(num, new_num, len, 16, 0);
-	new_num[0] = '0', new_num[1] = 'x';
+	if (num)
+	{
+		uint_to_str(num, new_num, len, 16, 0);
+		new_num[0] = '0', new_num[1] = 'x';
+	}
+	else
+		len = 5, _strcp(new_num, nil);
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
