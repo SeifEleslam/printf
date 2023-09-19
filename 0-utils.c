@@ -8,6 +8,7 @@
 int contains(char *s, char c)
 {
 	int i;
+
 	for (i = 0; s[i] != '\0'; i++)
 		if (s[i] == c)
 			return (1);
@@ -33,7 +34,7 @@ int _putstr(char *s, unsigned int n)
 int _strlen(char *s)
 {
 	int i;
-	
+
 	for (i = 0; s[i] != '\0';)
 		i++;
 	return (i);
@@ -47,7 +48,7 @@ int _strlen(char *s)
 void _strcp(char *to, char *from)
 {
 	int i;
-	
+
 	for (i = 0; from[i] != '\0'; i++)
 		to[i] = from[i];
 }
