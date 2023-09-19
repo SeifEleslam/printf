@@ -12,9 +12,9 @@ int _printf(const char *format, ...)
 	char conv_flag[5], *s, *tmp;
 	struct struct_conversion conv;
 	va_list list;
-	
+
 	if (!format)
-		return -1;
+		return (-1);
 	sum = 0;
 	s = (char *)format;
 	define_consts(conversions);
@@ -70,7 +70,7 @@ int _printf(const char *format, ...)
 	}
 	sum = sum + _putstr(s, i);
 	va_end(list);
-	return sum;
+	return (sum);
 }
 
 /**
@@ -84,7 +84,7 @@ void define_consts(conv_actions *conversions)
 
 	for (i = 0; i < 'z' - '%'; i++)
 		conversions[i] = NULL;
-	
+
 	conversions['c' - '%'] = handle_conv_c;
 	conversions['s' - '%'] = handle_conv_s;
 	conversions['%' - '%'] = handle_conv_percent;
@@ -118,7 +118,7 @@ void valid_exp(char *s, struct struct_conversion *conv)
 	flag_i = 0, p = 0;
 	for (i = 0; local_s[i] != '\0'; i++)
 	{
-		if (contains(flags, local_s[i]) == 1&& p == 0 && (conv->width == 0 || local_s[i] == '.'))
+		if (contains(flags, local_s[i]) == 1 && p == 0 && (conv->width == 0 || local_s[i] == '.'))
 		{
 			if (conv->starp == 1 || (conv->starw == 1 && local_s[i] != '.'))
 			{
@@ -195,7 +195,7 @@ void init_conv(struct struct_conversion *conv, char *conv_flag)
 int to_int(char **s)
 {
 	int i, val;
-	
+
 	val = 0;
 	for (i = 0; (*s)[i] >= '0' && (*s)[i] <= '9'; i++)
 	{
