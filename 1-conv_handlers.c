@@ -24,7 +24,7 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
     new_num = malloc(sizeof(char) * len);
     if (!new_num)
         exit(1);
-    uint_to_str(num, new_num, len, 10);
+    uint_to_str(num, new_num, len, 10, 0);
     width = conv->width > len ? conv->width : len;
     new_all = malloc(sizeof(char) * width);
     if (!new_all)
@@ -63,7 +63,7 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
     new_num = malloc(sizeof(char) * len);
     if (!new_num)
         exit(1);
-    uint_to_str(num, new_num, len, 8);
+    uint_to_str(num, new_num, len, 8, 0);
     if (contains(conv->flags, '#') && num > 0)
         new_num[0] = '0';
     width = conv->width > len ? conv->width : len;
