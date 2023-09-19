@@ -13,6 +13,10 @@ int handle_conv_u(struct struct_conversion *conv, va_list list)
 	unsigned long int num;
 	
 	direction = 1;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	if (conv->len == 'l')
 		num = (unsigned long int)va_arg(list, unsigned long int);
 	else if (conv->len == 'h')
@@ -59,6 +63,10 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
 	unsigned long int num;
 	
 	direction = 1;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	if (conv->len == 'l')
 		num = (unsigned long int)va_arg(list, unsigned long int);
 	else if (conv->len == 'h')
@@ -107,6 +115,10 @@ int handle_conv_x(struct struct_conversion *conv, va_list list)
 	unsigned long int num;
 	
 	direction = 1;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	if (conv->len == 'l')
 		num = (unsigned long int)va_arg(list, unsigned long int);
 	else if (conv->len == 'h')
@@ -200,6 +212,10 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 	unsigned long int num;
 	
 	direction = 1, sign = 0, sp = 0, t = 0;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	num = (unsigned long int)va_arg(list, unsigned long int);
 	if (contains(conv->flags, '-'))
 		direction = -1;
