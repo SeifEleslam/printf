@@ -173,27 +173,33 @@ int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv, va_lis
  */
 int handle_conv_p(struct struct_conversion *conv, va_list list)
 {
-	char *new_all, new_num[15], nil[] = "(nil)";
+	char nil[] = "(nil)";
+	char *new_all, *new_num;
 	int direction, width, len;
 	unsigned long int num;
 	
-	direction = 1, len = 2;
+	direction = 1;
 	num = (unsigned long int)va_arg(list, unsigned long int);
 	if (contains(conv->flags, '-'))
 		direction = -1;
-	
+	new_num = malloc(sizeof(char) * (num ? len : 5));
+	if (!new_num)
+		exit(1);
 	if (num)
 	{
-		len += _uintlen(num, 16);
+		len = _uintlen(num, 16) + 2;
 		uint_to_str(num, new_num, len, 16, 0);
 		new_num[0] = '0', new_num[1] = 'x';
 	}
 	else
-		len = 5, _strcp(new_num, nil);
+		_strcp(new_num, nil), len = 5;
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
+	{
+		free(new_num);
 		exit(1);
+	}
 	len = assign_width(new_all, new_num, width, len, direction);
 	free(new_all);
 	return len;
