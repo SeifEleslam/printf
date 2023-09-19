@@ -21,29 +21,41 @@ int _printf(const char *format, ...)
 	va_start(list, format);
 	for (i = 0; s[i] != '\0'; i++)
 	{
-	init_conv(&conv, conv_flag);
-	if (s[i] == '%')
-	{
-		valid_exp(s + i + 1, &conv);
-		if (conv.conv != '\0')
+		init_conv(&conv, conv_flag);
+		if (s[i] == '%')
 		{
-			if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
+			valid_exp(s + i + 1, &conv);
+			if (conv.conv != '\0')
 			{
-				sum += _putstr(s, i), i++;
-				while (s[i] != conv.conv)
-					i++;
-				s += i + 1;
-				i = -1;
-				func = conversions[conv.conv - '%'];
-				sum += func(&conv, list);
+				if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
+				{
+					sum += _putstr(s, i), i++;
+					while (s[i] != conv.conv)
+						i++;
+					s += i + 1;
+					i = -1;
+					func = conversions[conv.conv - '%'];
+					sum += func(&conv, list);
+				}
+			}
+			else
+			{
+				_putstr(s, i);
+				return (-1);
 			}
 		}
-		else
+		else if (s[i] == '*')
 		{
-			_putstr(s, i);
-			return (-1);
+			sum += _putstr(s, i), s += i + 1, i = -1;
+			starv = va_arg(list, int), starlen = _intlen(starv, 10);
+			tmp = malloc(sizeof(char) * starlen);
+			if (!tmp)
+				exit(1);
+			uint_to_str(starv, tmp, starlen, 10, 0);
+			starlen = _putstr(tmp, starlen);
+			free(tmp);
+			sum += starlen;
 		}
-	}
 	}
 	sum = sum + _putstr(s, i);
 	va_end(list);
