@@ -25,18 +25,29 @@ int _printf(const char *format, ...)
 		if (s[i] == '%')
 		{
 			valid_exp(s + i + 1, &conv);
-			if (conv.conv != '\0')
+			if (conv.conv != '\0' && conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
 			{
-				if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
-				{
-					sum += _putstr(s, i), i++;
-					while (s[i] != conv.conv)
-						i++;
-					s += i + 1;
-					i = -1;
-					func = conversions[conv.conv - '%'];
-					sum += func(&conv, list);
-				}
+				sum += _putstr(s, i), i++;
+				while (s[i] != conv.conv)
+					i++;
+				s += i + 1;
+				i = -1;
+				func = conversions[conv.conv - '%'];
+				sum += func(&conv, list);
+			}
+			else if (conv.starw == 1 || conv.starp == 1)
+			{
+				while (s[i] != '*')
+					i++;
+				sum += _putstr(s, i), s += i + 1, i = -1;
+				starv = va_arg(list, int), starlen = _intlen(starv, 10);
+				tmp = malloc(sizeof(char) * starlen);
+				if (!tmp)
+					exit(1);
+				uint_to_str(starv, tmp, starlen, 10, 0);
+				starlen = _putstr(tmp, starlen);
+				free(tmp);
+				sum += starlen;
 			}
 			else
 			{
