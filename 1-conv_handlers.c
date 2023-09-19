@@ -56,7 +56,7 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
     len = _uintlen(num, 8);
     if (contains(conv->flags, '-'))
         direction = -1;
-    if (contains(conv->flags, '#'))
+    if (contains(conv->flags, '#') && num > 0)
         len++;
     if (contains(conv->flags, '.') && conv->p > len)
         len = conv->p;
@@ -64,7 +64,7 @@ int handle_conv_o(struct struct_conversion *conv, va_list list)
     if (!new_num)
         exit(1);
     uint_to_str(num, new_num, len, 8);
-    if (contains(conv->flags, '#'))
+    if (contains(conv->flags, '#') && num > 0)
         new_num[0] = '0';
     width = conv->width > len ? conv->width : len;
     new_all = malloc(sizeof(char) * width);
