@@ -75,11 +75,17 @@ int handle_conv_percent(__attribute__((unused)) struct struct_conversion *conv, 
 int handle_conv_i(struct struct_conversion *conv, va_list list)
 {
 	char *new_all, *new_num;
-	int direction, width, len, num, sign;
+	int direction, width, len, sign;
+	long int num;
 	
 	sign = 0;
 	direction = 1;
-	num = (int)va_arg(list, int);
+	if (conv->len == 'l')
+		num = (long int)va_arg(list, long int);
+	else if (conv->len == 'h')
+		num = (short int)va_arg(list, int);
+	else
+		num = (int)va_arg(list, int);
 	len = _intlen(num, 10);
 	if (num < 0 || contains(conv->flags, '+'))
 	{
