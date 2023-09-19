@@ -90,10 +90,14 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		direction = -1;
 	if (contains(conv->flags, '.') && conv->p >= len)
 		len = conv->p + sign;
+	if (contains(conv->flags, ' ') && !contains(conv->flags, '+'))
+		len++;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
 	int_to_str(num, new_num, len, sign);
+	if (contains(conv->flags, ' ') && !contains(conv->flags, '+'))
+		new_num[0] = ' ';
 	width = conv->width > len ? conv->width : len;
 	new_all = malloc(sizeof(char) * width);
 	if (!new_all)
