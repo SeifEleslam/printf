@@ -6,7 +6,7 @@
  * @base: - char to sperate ints
  * Return: int
  */
-int _intlen(int num, int base)
+int _intlen(long int num, int base)
 {
 	int i;
 
@@ -21,7 +21,7 @@ int _intlen(int num, int base)
  * @base: - char to sperate ints
  * Return: int
  */
-int _uintlen(unsigned int num, unsigned int base)
+int _uintlen(unsigned long int num, unsigned int base)
 {
 	int i;
 	
@@ -37,7 +37,7 @@ int _uintlen(unsigned int num, unsigned int base)
  * @len: - char to sperate ints
  * @sign: - char to sperate ints
  */
-void int_to_str(int num, char *new_num, int len, int sign)
+void int_to_str(long int num, char *new_num, int len, int sign)
 {
 	int i;
 
@@ -59,7 +59,7 @@ void int_to_str(int num, char *new_num, int len, int sign)
  * @len: - char to sperate ints
  * @base: - char to sperate ints
  */
-void uint_to_str(unsigned int num, char *new_num, int len, unsigned int base, int uppercase)
+void uint_to_str(unsigned long int num, char *new_num, int len, unsigned int base, int uppercase)
 {
 	int i;
 
