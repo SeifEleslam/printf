@@ -164,3 +164,32 @@ int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv, va_lis
 	return len;
 }
 
+
+/**
+ * handle_conv_p - prints an int
+ * @conv: va_list
+ * @list: va_list
+ * Return: int
+ */
+int handle_conv_p(struct struct_conversion *conv, va_list list)
+{
+	char *new_all, new_num[15];
+	int direction, width, len;
+	unsigned long int num;
+	
+	direction = 1, len = 14;
+	num = (unsigned long int)va_arg(list, unsigned long int);
+	if (contains(conv->flags, '-'))
+		direction = -1;
+	
+	uint_to_str(num, new_num, len, 16, 0);
+	new_num[0] = '0', new_num[1] = 'x';
+	width = conv->width > len ? conv->width : len;
+	new_all = malloc(sizeof(char) * width);
+	if (!new_all)
+		exit(1);
+	len = assign_width(new_all, new_num, width, len, direction);
+	free(new_all);
+	return len;
+}
+
