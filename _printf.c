@@ -108,11 +108,11 @@ void valid_exp(char *s, struct struct_conversion *conv)
 			flag_i++;
 			}
 		}
-		else if (local_s[i] == '*' && (conv->width == 0 || (conv->p == 0 && p == 1)))
+		else if ((conv->starw == 0 || conv->starp == 0) && local_s[i] == '*' && (conv->width == 0 || (conv->p == 0 && p == 1)))
 		{
-			if (local_s[i - 1] == '.' && p == 1)
+			if (local_s[i - 1] == '.' && p == 1 && conv->starp == 0)
 				conv->starp = 1;
-			else if (p == 0 && conv->width == 0)
+			else if (p == 0 && conv->width == 0 &&  conv->starw == 0)
 				conv->starw = 1;
 		}
 		else if (local_s[i] >= '0' && local_s[i] <= '9' &&
