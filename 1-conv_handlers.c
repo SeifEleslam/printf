@@ -173,7 +173,7 @@ int handle_conv_S(__attribute__((unused)) struct struct_conversion *conv, va_lis
  */
 int handle_conv_p(struct struct_conversion *conv, va_list list)
 {
-	char *new_all, new_num[15];
+	char *new_all, new_num[15], nil[] = "(nil)";
 	int direction, width, len;
 	unsigned long int num;
 	
