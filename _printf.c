@@ -85,8 +85,8 @@ void define_consts(conv_actions *conversions)
  */
 void valid_exp(char *s, struct struct_conversion *conv)
 {
-	char conv_flags[5] = "\0\0\0\0\0", *local_s;
-	char flags[] = "+ -.#";
+	char conv_flags[6] = "\0\0\0\0\0\0", *local_s;
+	char flags[] = "+ 0-.#";
 	int i, flag_i, p, num;
 	
 	local_s = s;
