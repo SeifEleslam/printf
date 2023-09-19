@@ -124,7 +124,7 @@ int handle_conv_b(__attribute__((unused)) struct struct_conversion *conv, va_lis
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
-	uint_to_str(num, new_num, len, 2);
+	uint_to_str(num, new_num, len, 2, 0);
 	len = _putstr(new_num, len);
 	free(new_num);
 	return len;
