@@ -50,4 +50,6 @@ int handle_conv_x(struct struct_conversion *conv, va_list list);
 int handle_conv_S(struct struct_conversion *conv, va_list list);
 int handle_conv_p(struct struct_conversion *conv, va_list list);
 
+int handle_conv_r(struct struct_conversion *conv, va_list list);
+
 #endif
