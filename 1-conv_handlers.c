@@ -175,21 +175,28 @@ int handle_conv_p(struct struct_conversion *conv, va_list list)
 {
 	char nil[] = "(nil)";
 	char *new_all, *new_num;
-	int direction, width, len;
+	int direction, width, len, sign, sp, t;
 	unsigned long int num;
 	
-	direction = 1;
+	direction = 1, sign = 0, sp = 0, t = 0;
 	num = (unsigned long int)va_arg(list, unsigned long int);
 	if (contains(conv->flags, '-'))
 		direction = -1;
 	len = _uintlen(num, 16) + 2;
+	if (contains(conv->flags, '.') && conv->p > len - 2)
+		len = conv->p + 2;
+	if (contains(conv->flags, '+'))
+		len++, sign = 1, t = 1;
+	if (!contains(conv->flags, '+') && contains(conv->flags, ' '))
+		len++, sp = 1, t = 1;
 	new_num = malloc(sizeof(char) * (num ? len : 5));
 	if (!new_num)
 		exit(1);
 	if (num)
 	{
 		uint_to_str(num, new_num, len, 16, 0);
-		new_num[0] = '0', new_num[1] = 'x';
+		new_num[0 + t] = '0', new_num[1 + t] = 'x';
+		new_num[0] = (sp == 1 ? ' ' : sign == 1 ? '+' : '0');
 	}
 	else
 		_strcp(new_num, nil), len = 5;
