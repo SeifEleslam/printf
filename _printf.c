@@ -95,6 +95,11 @@ void valid_exp(char *s, struct struct_conversion *conv)
 	{
 		if (contains(flags, local_s[i]) == 1&& p == 0 && (conv->width == 0 || local_s[i] == '.'))
 		{
+			if (conv->starp == 1 || (conv->starw == 1 && local_s[i] != '.'))
+			{
+				conv->conv = local_s[i];
+				return;
+			}
 			if (local_s[i] == '.')
 				p++;
 			if (contains(conv_flags, local_s[i]) == 0)
@@ -103,8 +108,16 @@ void valid_exp(char *s, struct struct_conversion *conv)
 			flag_i++;
 			}
 		}
+		else if (local_s[i] == '*' && (conv->width == 0 || (conv->p == 0 && p == 1)))
+		{
+			if (local_s[i - 1] == '.' && p == 1)
+				conv->starp = 1;
+			else if (p == 0 && conv->width == 0)
+				conv->starw = 1;
+		}
 		else if (local_s[i] >= '0' && local_s[i] <= '9' &&
-			((conv->width == 0 && p == 0) || (conv->p == 0 && p == 1)))
+			((conv->width == 0 && p == 0 && conv->starw == 0) ||
+			(conv->p == 0 && p == 1 && conv->starp == 0)))
 		{
 			local_s += i;
 			i = -1;
@@ -140,10 +153,13 @@ void init_conv(struct struct_conversion *conv, char *conv_flag)
 	int i;
 	for (i = 0; i < 5; i++)
 		conv_flag[i] = '\0';
+	conv->len = '\0';
 	conv->conv = '\0';
 	conv->flags = conv_flag;
 	conv->p = 0;
 	conv->width = 0;
+	conv->starp = 0;
+	conv->starw = 0;
 }
 
 /**

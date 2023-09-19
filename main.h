@@ -12,6 +12,8 @@ struct struct_conversion
 	char *flags;
 	int p;
 	int width;
+	int starp;
+	int starw;
 };
 
 typedef int (*conv_actions)(struct struct_conversion *, va_list);

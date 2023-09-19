@@ -10,8 +10,12 @@ int handle_conv_c(struct struct_conversion *conv, va_list list)
 {
 	char *new, c;
 	int direction, width, len;
-	
+
 	direction = 1;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	c = (char)va_arg(list, int);
 	if (contains(conv->flags, '-'))
 		direction = -1;
@@ -38,6 +42,10 @@ int handle_conv_s(struct struct_conversion *conv, va_list list)
 	int direction, width, len;
 	
 	direction = 1;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	s = va_arg(list, char *);
 	if (s == NULL || *s < 0)
 		s = nil;
@@ -80,6 +88,10 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	
 	sign = 0;
 	direction = 1;
+	if (conv->starw == 1)
+		conv->width = (int)va_arg(list, int);
+	if (conv->starp == 1)
+		conv->p = (int)va_arg(list, int);
 	if (conv->len == 'l')
 		num = (long int)va_arg(list, long int);
 	else if (conv->len == 'h')
