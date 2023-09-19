@@ -51,6 +51,8 @@ int handle_conv_R(__attribute__((unused)) struct struct_conversion *conv, va_lis
 			new[i] = s[i] + 13;
 		else if ((s[i] >= 'n' && s[i] <= 'z') || (s[i] >= 'N' && s[i] <= 'Z'))
 			new[i] = s[i] - 13;
+		else
+			new[i] = s[i];
 	}
 	len = _putstr(new, len);
 	free(new);
