@@ -25,7 +25,7 @@ int handle_conv_c(struct struct_conversion *conv, va_list list)
 		exit(1);
 	len = assign_width(new, &c, width, 1, direction);
 	free(new);
-	return len;
+	return (len);
 }
 
 
@@ -40,7 +40,7 @@ int handle_conv_s(struct struct_conversion *conv, va_list list)
 	char nil[] = "(null)";
 	char *new, *s;
 	int direction, width, len;
-	
+
 	direction = 1;
 	if (conv->starw == 1)
 		conv->width = (int)va_arg(list, int);
@@ -58,7 +58,7 @@ int handle_conv_s(struct struct_conversion *conv, va_list list)
 		exit(1);
 	len = assign_width(new, s, width, len, direction);
 	free(new);
-	return len;
+	return (len);
 }
 
 /**
@@ -67,10 +67,12 @@ int handle_conv_s(struct struct_conversion *conv, va_list list)
  * @list: - char to sperate ints
  * Return: int
  */
-int handle_conv_percent(__attribute__((unused)) struct struct_conversion *conv, __attribute__((unused)) va_list list)
+int handle_conv_percent(__attribute__((unused)) struct struct_conversion *conv,
+	__attribute__((unused)) va_list list)
 {
 	char percent = '%';
-	return _putstr(&percent, 1);
+	
+	return (_putstr(&percent, 1));
 }
 
 
@@ -87,13 +89,14 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 	long int num;
 
 	sign = 0, direction = 1;
-	conv->width = conv->starw ==1 ? (int)va_arg(list, int) : conv->width;
+	conv->width = conv->starw == 1 ? (int)va_arg(list, int) : conv->width;
 	conv->p = conv->starp == 1 ? (int)va_arg(list, int) : conv->p;
 	if (conv->len == 'l')
 		num = (long int)va_arg(list, long int);
 	else if (conv->len == 'h')
 		num = (short int)va_arg(list, int);
-	else num = (int)va_arg(list, int);
+	else 
+		num = (int)va_arg(list, int);
 	len = _intlen(num, 10);
 	if (num < 0 || contains(conv->flags, '+'))
 	{
@@ -101,11 +104,11 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
 		sign = 1;
 	}
 	direction = contains(conv->flags, '-') ? -1 : direction;
-	len =contains(conv->flags, '.') && conv->p >= len ? conv->p + sign : len;
-	len = (contains(conv->flags, ' ') && !contains(conv->flags, '+') && num >= 0)? len + 1 : len ;
-	if (!contains(conv->flags, '.') && contains(conv->flags, '0')
-		&& conv->width >= len)
-		len = conv->width;
+	len = contains(conv->flags, '.') && conv->p >= len ? conv->p + sign : len;
+	len = (contains(conv->flags, ' ') && !contains(conv->flags, '+') 
+		&& num >= 0)? len + 1 : len;
+	len = (!contains(conv->flags, '.') && contains(conv->flags, '0')
+		&& conv->width >= len) ? conv->width : len;
 	new_num = malloc(sizeof(char) * len);
 	if (!new_num)
 		exit(1);
@@ -130,7 +133,8 @@ int handle_conv_i(struct struct_conversion *conv, va_list list)
  * @list: - char to sperate ints
  * Return: int
  */
-int handle_conv_b(__attribute__((unused)) struct struct_conversion *conv, va_list list)
+int handle_conv_b(__attribute__((unused)) struct struct_conversion *conv,
+	va_list list)
 {
 	char *new_num;
 	unsigned int len, num;
