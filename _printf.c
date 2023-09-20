@@ -7,9 +7,9 @@
  */
 int _printf(const char *format, ...)
 {
-	int i, sum, starlen, starv;
+	int i, sum;
 	conv_actions conversions['z' - '%'], func;
-	char conv_flag[5], *s, *tmp;
+	char conv_flag[5], *s;
 	struct struct_conversion conv;
 	va_list list;
 
