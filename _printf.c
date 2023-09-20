@@ -35,37 +35,11 @@ int _printf(const char *format, ...)
 				func = conversions[conv.conv - '%'];
 				sum += func(&conv, list);
 			}
-			else if (conv.starw == 1 || conv.starp == 1)
-			{
-				while (s[i] != '*')
-					i++;
-				sum += _putstr(s, i), s += i + 1, i = -1;
-				starv = va_arg(list, int), starlen = _intlen(starv, 10);
-				tmp = malloc(sizeof(char) * starlen);
-				if (!tmp)
-					exit(1);
-				uint_to_str(starv, tmp, starlen, 10, 0);
-				starlen = _putstr(tmp, starlen);
-				free(tmp);
-				sum += starlen;
-			}
 			else
 			{
 				_putstr(s, i);
 				return (-1);
 			}
-		}
-		else if (s[i] == '*')
-		{
-			sum += _putstr(s, i), s += i + 1, i = -1;
-			starv = va_arg(list, int), starlen = _intlen(starv, 10);
-			tmp = malloc(sizeof(char) * starlen);
-			if (!tmp)
-				exit(1);
-			uint_to_str(starv, tmp, starlen, 10, 0);
-			starlen = _putstr(tmp, starlen);
-			free(tmp);
-			sum += starlen;
 		}
 	}
 	sum = sum + _putstr(s, i);
