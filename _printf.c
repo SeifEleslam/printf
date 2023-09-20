@@ -25,15 +25,18 @@ int _printf(const char *format, ...)
 		if (s[i] == '%')
 		{
 			valid_exp(s + i + 1, &conv);
-			if (conv.conv != '\0' && conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
+			if (conv.conv != '\0')
 			{
-				sum += _putstr(s, i), i++;
-				while (s[i] != conv.conv)
-					i++;
-				s += i + 1;
-				i = -1;
-				func = conversions[conv.conv - '%'];
-				sum += func(&conv, list);
+				if (conv.conv - '%' >= 0 && conv.conv - '%' < 'z' - '%' && conversions[conv.conv - '%'])
+				{
+					sum += _putstr(s, i), i++;
+					while (s[i] != conv.conv)
+						i++;
+					s += i + 1;
+					i = -1;
+					func = conversions[conv.conv - '%'];
+					sum += func(&conv, list);
+				}
 			}
 			else
 			{
