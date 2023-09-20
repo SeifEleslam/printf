@@ -24,7 +24,7 @@ int _intlen(long int num, int base)
 int _uintlen(unsigned long int num, unsigned int base)
 {
 	int i;
-	
+
 	for (i = 0; num != 0; i++)
 		num /= base;
 	return (i > 0 ? i : 1);
